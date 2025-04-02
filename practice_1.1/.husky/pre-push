@@ -1,5 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
 
 # Дополнительные проверки перед пушем
-npm run build
+npm run build || exit 1
 #npm run jest

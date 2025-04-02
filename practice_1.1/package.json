@@ -9,7 +9,7 @@
     "prettier:fix": "prettier --write .",
     "typecheck": "tsc --noEmit",
     "check": "npm run typecheck && npm run lint",
-    "prepare": "husky install",
+    "prepare": "husky",
     "build": "tsc"
   },
   "author": "",
