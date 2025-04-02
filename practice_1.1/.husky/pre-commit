@@ -1,3 +1,5 @@
-#!/bin/sh
-echo "Hook is working!"
-exit 1  # Принудительная ошибка
+#!/bin/bash
+
+# Запуск линтера и проверки типов
+npm run lint || exit 1
+npm run typecheck || exit 1
