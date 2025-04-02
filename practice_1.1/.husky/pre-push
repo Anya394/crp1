@@ -3,4 +3,4 @@
 
 # Дополнительные проверки перед пушем
 npm run build || exit 1
-#npm run jest
+#npm run jest 
