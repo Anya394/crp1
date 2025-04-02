@@ -5,6 +5,15 @@ import tseslint from 'typescript-eslint';
 import pluginReact from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import prettier from 'eslint-config-prettier';
+import tsParser from '@typescript-eslint/parser';
+import tsPlugin from '@typescript-eslint/eslint-plugin';
+import { FlatCompat } from '@eslint/eslintrc';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Получаем текущую директорию
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export default defineConfig([
   { files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'] },
@@ -53,6 +62,27 @@ export default defineConfig([
   {
     ignores: ['**/dist/', '**/node_modules/', '*.config.js'],
   },
+  // Настройки для TypeScript файлов
+  {
+    files: ['**/*.ts', '**/*.tsx'],
+    languageOptions: {
+      parser: tsParser,
+      parserOptions: {
+        project: true, // Автоматически ищет tsconfig.json
+        tsconfigRootDir: __dirname,
+      },
+    },
+    plugins: {
+      '@typescript-eslint': tsPlugin,
+    },
+    rules: {
+      ...tsPlugin.configs['recommended'].rules,
+      ...tsPlugin.configs['stylistic'].rules,
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/consistent-type-imports': 'error',
+    },
+  },
+
   tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
   prettier,
