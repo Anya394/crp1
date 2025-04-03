@@ -12,7 +12,7 @@
     "prepare": "husky",
     "build": "tsc"
   },
-  "pre-commit": [
+  "pre-commit": [ 
     "lint"
   ],
   "author": "",
