@@ -1,5 +1,6 @@
 import { Tabs } from '@chakra-ui/react';
 import { ButtonAntd } from '../Button/ButtonAntD';
+import { RatingMui } from '../Rating/RatingMui';
 
 export const TabsChakra = () => {
     return (
@@ -11,14 +12,13 @@ export const TabsChakra = () => {
             </Tabs.List>
 
             <Tabs.Content value="tab1">
-                <p>Content for Tab 1</p>
                 <ButtonAntd />
             </Tabs.Content>
             <Tabs.Content value="tab2">
                 <p>Content for Tab 2</p>
             </Tabs.Content>
             <Tabs.Content value="tab3">
-                <p>Content for Tab 3</p>
+                <RatingMui />
             </Tabs.Content>
         </Tabs.Root>
       );

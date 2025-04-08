@@ -15,6 +15,8 @@
         "@chakra-ui/react": "^3.15.1",
         "@emotion/react": "^11.14.0",
         "@emotion/styled": "^11.14.0",
+        "@mui/icons-material": "^7.0.1",
+        "@mui/material": "^7.0.1",
         "antd": "^5.24.6",
         "eslint-plugin-check-file": "^2.8.0",
         "framer-motion": "^12.6.3",
