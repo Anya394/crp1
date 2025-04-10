@@ -4,6 +4,8 @@ import { Provider } from "@/components/ui/provider"
 import { App } from './app';
 import '@mantine/dates/styles.css';
 import '@mantine/core/styles.css';
+import "@radix-ui/themes/styles.css";
+
 const root = document.getElementById('root');
 if (!root) throw new Error('No root element found');
 

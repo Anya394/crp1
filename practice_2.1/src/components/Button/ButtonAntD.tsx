@@ -1,10 +1,15 @@
 import { Button } from 'antd';
 import React from 'react';
 
-export const ButtonAntd = () => {
+interface ButtonProps {
+  text?: string;
+  onClick?: void;
+}
+
+export const ButtonAntd = ({ text = "Ок", onClick}: ButtonProps) => {
   return (
-    <Button type="primary">
-      Нажми меня
+    <Button type="primary" onClick={() => onClick}>
+      {text}
     </Button>
   );
 };
