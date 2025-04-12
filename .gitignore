@@ -6,3 +6,7 @@
 /practice_1.2/next/.next
 /practice_2.1/node_modules
 /practice_2.1/__MACOSX
+/practice_3.1/node_modules
+/practice_3.1/.next
+/practice_3.1/styled-system
+/practice_3.1/next-env.d.ts
