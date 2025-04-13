@@ -1,23 +1,26 @@
 import React from 'react';
 import styles from './Card.module.css';
 import { CardProps } from '@/types';
+import { Button } from '@/app/components/Button/Button';
 
 const Card: React.FC<CardProps> = ({
   title = 'Title',
   content = 'Content',
-  buttonText = 'Change',
-  onButtonClick = () => {
-    console.log('Button clicked!');
-  }
+  buttonText,
+  onButtonClick,
+  variantButton,
+  sizeButton
 }) => {;
 
   return (
     <div className={styles.card}>
       <h3 className={styles.title}>{title}</h3>
       <p className={styles.content}>{content}</p>
-      <button className={styles.button}>
-        {buttonText}
-      </button>
+      <Button 
+        text={buttonText} 
+        onClick={onButtonClick}
+        variant={variantButton}
+        size={sizeButton}/>
     </div>
   );
 };
