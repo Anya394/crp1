@@ -1,11 +1,11 @@
 import Image from "next/image";
-import styles from "./page.module.css";
 import Card from '@/app/components/Card/Card';
+import { css } from '../../styled-system/css';
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
+    <div className={css({ padding:"5px", display:"flex", justifyContent:"center" })}>
+      <main className={css({ padding:"5px", width:"70%" })}>
           <Card
           title="TypeScript Card"
           content="This is a fully typed Card component with CSS Modules in Next.js."
