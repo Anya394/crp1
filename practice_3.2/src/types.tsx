@@ -3,13 +3,11 @@ export interface CardProps {
     content: string;
     buttonText?: string;
     onButtonClick?: () => void;
-    variantButton?: "center" | "right" | "left";
-    sizeButton?: "sm" | "md" | "lg";
+    miniButton?: boolean;
 }
 
 export interface ButtonProps {
-    text: React.ReactNode;
+    text?: React.ReactNode;
     onClick?: () => void;
-    variant?: "center" | "right" | "left";
-    size?: "sm" | "md" | "lg";
+    mini?;
 }
