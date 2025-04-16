@@ -2,40 +2,32 @@
 
 import { NextPage } from 'next';
 import { useParams} from 'next/navigation';
-import { PostProps, TPost} from '../../types/post.type';
+import { PostProps} from '../../types/post.type';
 import Link from "next/link";
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import { fetchPostById } from '../../features/fetchPosts';
+import { useQuery } from "@tanstack/react-query";
+import { LoadingSpinner } from "../../entities/Loader/LoadingSpinner"
+import { ErrorMessage } from "../../entities/Error/ErrorMessage";
 
 
 const PostPage: NextPage<PostProps> = () => {
 
-  const [post, setPost] = useState<TPost>();
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
   const params = useParams();
   const id = params.id as string;
 
-  useEffect(() => {
-    console.log(params)
-    const loadPosts = async () => {
-      try {
-        const data = await fetchPostById(id);
-        setPost(data);
-      } catch (err) {
-        console.error(err);
-        setError("Error");
-      } finally {
-        setLoading(false);
-      }
-    };
+  const {
+    data: post,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["post", id],
+    queryFn: () => fetchPostById(id),
+  });
 
-    loadPosts();
-  }, []);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (isLoading) return <LoadingSpinner />;
+  if (isError) return <ErrorMessage message={error.message} />;
 
   return (
     <div className="container mx-auto p-4 max-w-2xl">

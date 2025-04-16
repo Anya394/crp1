@@ -1,17 +1,19 @@
-import { TPost } from '../types/post.type';
+import axios from "axios";
+import { postSchema, TPost } from '../types/post.type';
 
 export const fetchPosts = async (): Promise<TPost[]> => {
-  const res = await fetch('https://jsonplaceholder.typicode.com/posts');
-  if (!res.ok) {
+  const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+  if (!response.ok) {
     throw new Error('Failed to fetch posts');
   }
-  return res.json();
+  return response.json();
 };
 
+const api = axios.create({
+  baseURL: "https://jsonplaceholder.typicode.com",
+});
+
 export const fetchPostById = async (id: string): Promise<TPost> => {
-  const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
-  if (!res.ok) {
-    throw new Error('Failed to fetch post');
-  }
-  return res.json();
+  const response = await api.get(`/posts/${id}`);
+  return postSchema.parse(response.data); // Валидация через Zod
 };
