@@ -6,6 +6,7 @@ import { TPost } from '../types/post.type';
 import { Post } from '../entities/Post/Post';
 import { LoadingSpinner } from "../entities/Loader/LoadingSpinner"
 import { ErrorMessage } from "../entities/Error/ErrorMessage";
+import Link from "next/link";
 
 export default function Home() {
 
@@ -39,7 +40,9 @@ export default function Home() {
           <h1 className="text-3xl font-bold mb-6">Posts from JSONPlaceholder</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {posts.map((post) => (
-              <Post key={post.id} post={post}/>
+              <Link key={post.id} href={`/${post.id}`} passHref>
+                <Post post={post}/>
+              </Link>
             ))}
           </div>
         </div>
