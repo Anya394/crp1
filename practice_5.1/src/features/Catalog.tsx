@@ -1,7 +1,7 @@
 "use client"
 
-import ProductCard from '../entities/ProductCard';
-import useProducts from '../entities/ProductsStorage';
+import ProductCard from '@/entities/ProductCard';
+import useProducts from '@/entities/ProductsStorage';
 
 export default function Catalog() {
   const { products } = useProducts();

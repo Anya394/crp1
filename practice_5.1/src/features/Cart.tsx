@@ -1,8 +1,8 @@
 'use client';
 
 import { useSelector } from 'react-redux';
-import { RootState } from '../ReduxStore';
-import ProductCard from '../entities/ProductCard';
+import { RootState } from '@/ReduxStore';
+import ProductCard from '@/entities/ProductCard';
 import { CatalogToCartBridge } from '@/CatalogToCartBridge';
 import useProducts from '@/entities/ProductsStorage';
 
@@ -26,7 +26,7 @@ export function Cart() {
         <ul className="space-y-8">
           {items.map(item => (
             <li key={item.id} className="flex justify-between flex justify-center">
-              <div className='border-b border-gray-300 pb-8 w-[50%]'>
+              <div className='border-b border-gray-300 pb-8 w-[30%]'>
                 <ProductCard
                   product={item}
                 />

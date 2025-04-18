@@ -1,5 +1,4 @@
-import Link from 'next/link';
-import Catalog from '../../features/Catalog';
+import Catalog from '@/features/Catalog';
 
 export default function CatalogPage() {
 
