@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ReduxProvider from '@/ReduxProvider';
+import { Provider as JotaiProvider } from 'jotai';
 import { Header } from '@/features/Header';
 
 const geistSans = Geist({
@@ -30,10 +31,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ReduxProvider>
-          <Header />
-          <main className="">
-            {children}
-          </main>
+          <JotaiProvider>
+            <Header />
+            <main className="">
+              {children}
+            </main>
+          </JotaiProvider>
         </ReduxProvider>
       </body>
     </html>

@@ -2,10 +2,13 @@ import React from 'react';
 import { ProductProps } from '@/types';
 import { CatalogToCartBridge } from '@/CatalogToCartBridge';
 import useProducts from './ProductsStorage';
+import { useAtom } from 'jotai';
+import { isLoggedInAtom } from '@/entities/authStorage';
 
 const ProductCard: React.FC<ProductProps> = ({ product }) => {
     const { addToCartZustandCatalog, removeFromCartZustandCatalog } = useProducts();
     const { addToCartReduxCart, removeFromCartReduxCart } = CatalogToCartBridge();
+    const [isLoggedIn] = useAtom(isLoggedInAtom);
 
     const handleAddToCart = (id: number) => {
       addToCartZustandCatalog(id); // Для изменения добавленного количества в карточке товара в каталоге.
@@ -30,16 +33,17 @@ const ProductCard: React.FC<ProductProps> = ({ product }) => {
         <div className="flex items-center justify-between">
           <button 
             onClick={() => handleRemoveFromCart(product.id)} 
-            disabled={product.quantity === 0}
-            className={`px-3 py-1 rounded ${product.quantity === 0 ? 'bg-gray-300' : 'bg-red-500 hover:bg-red-600'} text-white`}>
+            disabled={product.quantity === 0 || !isLoggedIn}
+            className={`px-3 py-1 rounded ${product.quantity === 0 || !isLoggedIn? 'bg-gray-300' : 'bg-red-500 hover:bg-red-600'} text-white`}>
             -
           </button>
           
-          <span className="mx-2">{product.quantity}</span>
+          <span className="mx-2">{isLoggedIn ? product.quantity : 0}</span>
           
           <button 
             onClick={() => handleAddToCart(product.id)}
-            className="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded">
+            disabled={!isLoggedIn}
+            className={`px-3 py-1 text-white rounded ${isLoggedIn ? 'bg-blue-500 hover:bg-blue-600' : 'bg-gray-300'}`}>
             +
           </button>
         </div>

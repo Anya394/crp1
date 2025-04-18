@@ -1,5 +1,6 @@
 import { CartIcon } from '@/entities/CartIcon';
 import Link from 'next/link';
+import { AuthStatus } from './AuthStatus';
 
 export const Header = () => {
   return (
@@ -13,6 +14,7 @@ export const Header = () => {
             Каталог
           </Link>
           <CartIcon />
+          <AuthStatus />
         </nav>
       </div>
     </header>
