@@ -3,18 +3,20 @@ export interface Product {
     name: string;
     price: number;
     image: string;
-    quantityInCart: number;
+    quantity: number;
 }
 
 export interface ProductsState {
     products: Product[];
-    addToCart: (productId: number) => void;
-    removeFromCart: (productId: number) => void;
+    addToCartZustandCatalog: (productId: number) => void;
+    removeFromCartZustandCatalog: (productId: number) => void;
+    deleteFromCartZustandCatalog: (productId: number) => void;
 }
 
-export interface ProductCardProps {
+export interface ProductProps {
     product: Product;
-    onAddToCart: () => void;
-    onRemoveFromCart: () => void;
-  }
-  
+}
+
+export interface CartState {
+    items: Product[];
+}
