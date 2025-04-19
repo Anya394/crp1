@@ -20,3 +20,10 @@ export interface ProductProps {
 export interface CartState {
     items: Product[];
 }
+
+export type Theme = 'light' | 'dark';
+
+export type ThemeContextType = {
+  theme: Theme | null;
+  toggleTheme: () => void;
+};

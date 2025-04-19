@@ -4,6 +4,7 @@ import "./globals.css";
 import ReduxProvider from '@/ReduxProvider';
 import { Provider as JotaiProvider } from 'jotai';
 import { Header } from '@/features/Header';
+import { ThemeProvider } from '@/features/ThemeContext';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,16 +27,37 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Скрипт для предотвращения мерцания темы */}
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            (function() {
+              // 1. Проверяем сохраненную тему в localStorage
+              const savedTheme = localStorage.getItem('theme');
+              // 2. Проверяем системные предпочтения
+              const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+              // 3. Определяем начальную тему
+              const initialTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+              // 4. Применяем тему сразу, до загрузки React
+              document.documentElement.classList.add(initialTheme);
+              // 5. Сохраняем в data-атрибут для доступа из React
+              document.documentElement.setAttribute('data-theme', initialTheme);
+            })();
+          `
+        }} />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ReduxProvider>
           <JotaiProvider>
-            <Header />
-            <main className="">
-              {children}
-            </main>
+            <ThemeProvider>
+              <Header />
+              <main className="">
+                {children}
+              </main>
+            </ThemeProvider>
           </JotaiProvider>
         </ReduxProvider>
       </body>

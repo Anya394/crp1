@@ -1,6 +1,7 @@
 import { CartIcon } from '@/entities/CartIcon';
 import Link from 'next/link';
 import { AuthStatus } from './AuthStatus';
+import { ThemeToggle } from '@/entities/ThemeToggle';
 
 export const Header = () => {
   return (
@@ -10,6 +11,7 @@ export const Header = () => {
           Космический магазин
         </Link>
         <nav className="flex items-center gap-6">
+          <ThemeToggle />
           <Link href="/catalog" className="hover:text-gray-300">
             Каталог
           </Link>

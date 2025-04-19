@@ -5,12 +5,14 @@ import { RootState } from '@/ReduxStore';
 import ProductCard from '@/entities/ProductCard';
 import { CatalogToCartBridge } from '@/CatalogToCartBridge';
 import useProducts from '@/entities/ProductsStorage';
+import { useTheme } from '@/hooks/useTheme';
 
 export function Cart() {
   const items = useSelector((state: RootState) => state.cart.items);
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const { deleteFromCartZustandCatalog } = useProducts();
   const { removePositionFromCartReduxCart } = CatalogToCartBridge();
+  const { theme } = useTheme();
 
   const handleDeletePosition = (id: number) => {
     deleteFromCartZustandCatalog(id);
@@ -30,7 +32,8 @@ export function Cart() {
                 <ProductCard
                   product={item}
                 />
-                <button className='bg-red-200 hover:bg-red-300 active:bg-red-400 w-[100%] rounded-b-lg' onClick={() => handleDeletePosition(item.id)}>Удалить</button>
+                <button className={`bg-red-200 hover:bg-red-300 active:bg-red-400 w-[100%] rounded-b-lg
+                  ${theme === "dark" ? 'text-gray-800' : 'text-white'}`} onClick={() => handleDeletePosition(item.id)}>Удалить</button>
               </div>
               
             </li>
