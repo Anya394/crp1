@@ -1,18 +1,16 @@
 'use client';
 
-import { useSelector } from 'react-redux';
-import { RootState } from '@/ReduxStore';
 import ProductCard from '@/entities/ProductCard';
 import { CatalogToCartBridge } from '@/CatalogToCartBridge';
 import useProducts from '@/entities/ProductsStorage';
 import { useTheme } from '@/hooks/useTheme';
+import { useCart } from '@/hooks/useCart';
 
 export function Cart() {
-  const items = useSelector((state: RootState) => state.cart.items);
-  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const { deleteFromCartZustandCatalog } = useProducts();
   const { removePositionFromCartReduxCart } = CatalogToCartBridge();
   const { theme } = useTheme();
+  const { total, items } = useCart();
 
   const handleDeletePosition = (id: number) => {
     deleteFromCartZustandCatalog(id);

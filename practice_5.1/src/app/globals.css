@@ -7,6 +7,8 @@
   --color-text-primary: #111827;
   --color-text-secondary: #4b5563;
   --header-bg: #1f2937;
+  --button-bg: #1f2937;
+  --button-text: #f3f4f6;
 }
 
 /* Dark theme */
@@ -16,6 +18,8 @@
   --color-text-primary: #f3f4f6;
   --color-text-secondary: #d1d5db;
   --header-bg: #161d25;
+  --button-bg: #f3f4f6;
+  --button-text: #161d25;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -36,4 +40,10 @@ header {
   background-color: var(--header-bg);
   transition: background-color 0.3s, color 0.3s;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.mainButton {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  transition: background-color 0.3s, color 0.3s;
 }

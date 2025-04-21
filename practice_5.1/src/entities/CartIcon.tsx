@@ -1,16 +1,14 @@
 'use client';
 
-import { useSelector } from 'react-redux';
-import type { RootState } from '@/ReduxStore';
 import Link from 'next/link';
 import { ShoppingCart } from 'lucide-react';
 import { useAtom } from 'jotai';
 import { isLoggedInAtom } from '@/entities/authStorage';
+import { useCart } from '@/hooks/useCart';
 
 export const CartIcon = () => {
-  const itemsCount = useSelector((state: RootState) => 
-    state.cart.items.reduce((sum, item) => sum + item.quantity, 0)
-  );
+  const { items } = useCart();
+  const itemsCount = items.reduce((sum, item) => sum + item.quantity, 0);
   const [isLoggedIn] = useAtom(isLoggedInAtom);
 
   return (
