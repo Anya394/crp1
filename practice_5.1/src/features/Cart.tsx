@@ -3,13 +3,11 @@
 import ProductCard from '@/entities/ProductCard';
 import { CatalogToCartBridge } from '@/CatalogToCartBridge';
 import useProducts from '@/entities/ProductsStorage';
-import { useTheme } from '@/hooks/useTheme';
 import { useCart } from '@/hooks/useCart';
 
 export function Cart() {
   const { deleteFromCartZustandCatalog } = useProducts();
   const { removePositionFromCartReduxCart } = CatalogToCartBridge();
-  const { theme } = useTheme();
   const { total, items } = useCart();
 
   const handleDeletePosition = (id: number) => {
@@ -19,7 +17,7 @@ export function Cart() {
 
   return ( 
     <div className="">
-      <h2 className="text-xl font-bold mb-2 flex justify-center">Корзина</h2>
+      <h2 className="text-xl font-bold m-5 flex justify-center">Корзина</h2>
       {items.length === 0 ? (
         <p className='flex justify-center'>Корзина пуста</p>
       ) : (
@@ -30,15 +28,14 @@ export function Cart() {
                 <ProductCard
                   product={item}
                 />
-                <button className={`bg-red-200 hover:bg-red-300 active:bg-red-400 w-[100%] rounded-b-lg
-                  ${theme === "dark" ? 'text-gray-800' : 'text-white'}`} onClick={() => handleDeletePosition(item.id)}>Удалить</button>
+                <button className={`bg-red-200 text-gray-800 hover:bg-red-300 active:bg-red-400 w-[100%] rounded-b-lg`} onClick={() => handleDeletePosition(item.id)}>Удалить</button>
               </div>
               
             </li>
           ))}
         </ul>
       )}
-      <div className="mt-4 font-bold flex justify-center">Итого: {total}₽</div>
+      <div className="m-6 font-bold flex justify-center">Итого: {total}₽</div>
     </div>
   );
 }

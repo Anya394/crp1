@@ -5,6 +5,7 @@ import ReduxProvider from '@/ReduxProvider';
 import { Provider as JotaiProvider } from 'jotai';
 import { Header } from '@/features/Header';
 import { ThemeProvider } from '@/features/ThemeContext';
+import { OrdersProvider } from "@/StateMachineProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -53,10 +54,12 @@ export default function RootLayout({
         <ReduxProvider>
           <JotaiProvider>
             <ThemeProvider>
+              <OrdersProvider>
               <Header />
               <main className="">
                 {children}
               </main>
+              </OrdersProvider>
             </ThemeProvider>
           </JotaiProvider>
         </ReduxProvider>

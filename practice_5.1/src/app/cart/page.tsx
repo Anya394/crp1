@@ -3,12 +3,16 @@
 import { Cart } from '@/features/Cart';
 import { useAtom } from 'jotai';
 import { isLoggedInAtom } from '@/entities/authStorage';
+import Link from 'next/link';
+import { useCart } from '@/hooks/useCart';
 /*import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';*/
 
 export default function CartPage() {
 
   const [isLoggedIn] = useAtom(isLoggedInAtom);
+  const { items } = useCart();
+
   /*const router = useRouter();
   useEffect(() => {
     if (!isLoggedIn) {
@@ -21,8 +25,18 @@ export default function CartPage() {
   }
 
   return (
-    <div>
-        <Cart/>
+    <div className=''>
+      <Cart/>
+      {
+        items.length != 0 && 
+        <div className='flex justify-center'>
+          <Link href="/place-an-order">
+            <div className={`mb-6 pb-5 pt-5 px-10 text-gray-800 bg-green-400 hover:bg-green-500 active:bg-green-600 h-10 rounded-lg flex items-center justify-center`}>
+              Оформить
+            </div>
+          </Link>
+        </div>
+      }
     </div>
   );
 }

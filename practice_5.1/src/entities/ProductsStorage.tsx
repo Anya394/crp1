@@ -59,6 +59,14 @@ const useProducts = create<ProductsState>((set) => ({
             : product
         ),
       })),
+    clearCartZustandCatalog: () => 
+      set((state) => ({
+        products: state.products.map(product =>
+          product.quantity > 0
+            ? { ...product, quantity: 0 }
+            : product
+        ),
+      })),
 }));
   
 export default useProducts;

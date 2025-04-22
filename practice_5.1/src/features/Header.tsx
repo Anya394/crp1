@@ -16,6 +16,9 @@ export const Header = () => {
             Каталог
           </Link>
           <CartIcon />
+          <Link href="/orders" className="hover:text-gray-300">
+            Мои заказы
+          </Link>
           <AuthStatus />
         </nav>
       </div>

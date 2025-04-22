@@ -2,7 +2,7 @@
 
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '@/ReduxStore';
-import { addToCart, removeFromCart, removePositionFromCart } from '@/entities/CartStorage';
+import { addToCart, removeFromCart, removePositionFromCart, clearCart } from '@/entities/CartStorage';
 import { Product } from '@/types';
 
 export const useCart = () => {
@@ -15,5 +15,6 @@ export const useCart = () => {
     addToCart: (product: Product) => dispatch(addToCart(product)),
     removeFromCart: (productId: number) => dispatch(removeFromCart(productId)),
     removePositionFromCart: (productId: number) => dispatch(removePositionFromCart(productId)),
+    clearCart: () => dispatch(clearCart()),
   };
 };
