@@ -1,5 +1,6 @@
 import { EventFrom, StateFrom } from "xstate";
 import { orderMachine } from "./entities/OrdersStorage";
+import { z } from "zod";
 
 export interface Product {
     id: number;
@@ -44,6 +45,7 @@ export interface Order {
     items: CartItem[];
     date: string;
     total: number;
+    address?: string;
 }
 
 export interface OrdersProps {
@@ -54,3 +56,23 @@ export type OrderContextType = {
     state: StateFrom<typeof orderMachine>;
     send: (event: EventFrom<typeof orderMachine>) => void;
 };
+
+export type OrderData = {
+    formData: {
+      address: string;
+      phone: string;
+      paymentMethod: 'card' | 'cash';
+    };
+};
+
+// Схема валидации
+export const formSchema = z.object({
+    address: z.string().min(5, 'Адрес должен содержать минимум 5 символов'),
+    phone: z.string()
+      .min(11, 'Номер должен содержать 11 цифр')
+      .max(11, 'Номер должен содержать 11 цифр')
+      .regex(/^\d+$/, 'Только цифры'),
+    paymentMethod: z.enum(['card', 'cash'])
+});
+  
+export type FormData = z.infer<typeof formSchema>;

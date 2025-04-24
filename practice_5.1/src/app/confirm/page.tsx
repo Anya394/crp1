@@ -4,11 +4,14 @@ import { useCart } from '@/hooks/useCart';
 import { useOrders } from '@/hooks/useOrders';
 import Link from 'next/link';
 import useProducts from '@/entities/ProductsStorage';
+import { useEffect, useState } from 'react';
+import { OrderData } from '@/types';
 
-export default function CheckoutPage() {
+export default function ConfirmPage() {
   const { state, send } = useOrders();
   const { items, total, clearCart } = useCart();
   const { clearCartZustandCatalog} = useProducts();
+  const [order, setOrder] = useState<OrderData | null>(null);
 
   const handlePlaceOrder = () => {
     
@@ -19,12 +22,25 @@ export default function CheckoutPage() {
         name: item.name,
         price: item.price,
         quantity: item.quantity
-      }))
+      })),
+      address: order?.formData.address
     });
     
     clearCart();
     clearCartZustandCatalog();
   };
+
+  useEffect(() => {
+    const orderData = sessionStorage.getItem('currentOrder');
+    if (orderData) {
+      setOrder(JSON.parse(orderData));
+      sessionStorage.removeItem('currentOrder');
+    }
+  }, []);
+
+  if (!order) {
+    return <div className="p-4 flex justify-center">Загрузка данных заказа...</div>;
+  }
 
   return (
     <div className="max-w-2xl mx-auto p-4">
@@ -51,6 +67,13 @@ export default function CheckoutPage() {
 
       {state.matches('idle') && items.length != 0 && (
         <div>
+          <div className="mb-6">
+            <h2 className="text-xl font-semibold mb-2 flex justify-center">Данные доставки:</h2>
+            <p><strong>Адрес:</strong> {order.formData.address}</p>
+            <p><strong>Телефон:</strong> {order.formData.phone}</p>
+            <p><strong>Способ оплаты:</strong> {order.formData.paymentMethod === 'card' ? 'Картой онлайн' : 'Наличными при получении'}</p>
+          </div>
+
           <div className="mb-4">
             <p className="flex justify-center font-bold">Заказ:</p>
             {items.map(item => (
@@ -61,6 +84,7 @@ export default function CheckoutPage() {
             ))}
             <div className="mt-6 font-bold flex justify-end">{total} ₽</div>
           </div>
+
           <button
             onClick={handlePlaceOrder}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg disabled:bg-gray-400"

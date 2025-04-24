@@ -1,25 +1,31 @@
 import React from 'react';
-import { ProductProps } from '@/types';
-import { CatalogToCartBridge } from '@/CatalogToCartBridge';
+import { Product, ProductProps } from '@/types';
 import useProducts from './ProductsStorage';
 import { useAtom } from 'jotai';
 import { isLoggedInAtom } from '@/entities/authStorage';
 import { useTheme } from '@/hooks/useTheme';
+import { useCart } from '@/hooks/useCart';
 
 const ProductCard: React.FC<ProductProps> = ({ product }) => {
     const { addToCartZustandCatalog, removeFromCartZustandCatalog } = useProducts();
-    const { addToCartReduxCart, removeFromCartReduxCart } = CatalogToCartBridge();
+    const { addToCart, removeFromCart } = useCart();
     const [isLoggedIn] = useAtom(isLoggedInAtom);
     const { theme } = useTheme();
 
-    const handleAddToCart = (id: number) => {
+    const handleAddToCart = (id: number, product: Product) => {
       addToCartZustandCatalog(id); // Для изменения добавленного количества в карточке товара в каталоге.
-      addToCartReduxCart(id); // Для изменения добавленного количества в корзине.
+      addToCart({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        quantity: product.quantity,
+        image: product.image
+      }); // Для изменения добавленного количества в корзине.
     }
 
     const handleRemoveFromCart = (id: number) => {
       removeFromCartZustandCatalog(id);
-      removeFromCartReduxCart(id);
+      removeFromCart(id);
     }
 
     return (
@@ -45,7 +51,7 @@ const ProductCard: React.FC<ProductProps> = ({ product }) => {
           <span className="mx-2">{isLoggedIn ? product.quantity : 0}</span>
           
           <button 
-            onClick={() => handleAddToCart(product.id)}
+            onClick={() => handleAddToCart(product.id, product)}
             disabled={!isLoggedIn}
             className={`px-3 py-1 rounded 
               ${isLoggedIn ? 'bg-blue-500 hover:bg-blue-600' : 'bg-gray-300'} 

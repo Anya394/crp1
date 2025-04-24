@@ -2,8 +2,8 @@
 
 import { useAtom } from 'jotai';
 import { isLoggedInAtom } from '@/entities/authStorage';
-import Link from 'next/link';
 import { useCart } from '@/hooks/useCart';
+import PaymentForm from '@/entities/PaymentForm';
 
 export default function CartPage() {
 
@@ -15,20 +15,8 @@ export default function CartPage() {
   }
 
   return (
-    <div className=''>
-      <div className='flex flex-col items-center'>
-        <h2 className="text-xl font-bold m-5">Оформление заказа</h2>
-        {items.length !== 0 && (
-          <div>
-            <p className="m-2">Введите данные</p>
-            <Link href="/confirm" className='w-[40%]'>
-              <div className={`mb-6 mt-6 pb-5 pt-5 px-10 text-gray-800 bg-green-400 hover:bg-green-500 active:bg-green-600 h-10 rounded-lg flex items-center justify-center`}>
-                Оформить
-              </div>
-            </Link>
-          </div>
-        )}
-      </div>
+    <div className='flex flex-col items-center'>
+      {items.length !== 0 && ( <PaymentForm /> )}
     </div>
   );
 }

@@ -1,18 +1,16 @@
 'use client';
 
 import ProductCard from '@/entities/ProductCard';
-import { CatalogToCartBridge } from '@/CatalogToCartBridge';
 import useProducts from '@/entities/ProductsStorage';
 import { useCart } from '@/hooks/useCart';
 
 export function Cart() {
   const { deleteFromCartZustandCatalog } = useProducts();
-  const { removePositionFromCartReduxCart } = CatalogToCartBridge();
-  const { total, items } = useCart();
+  const { total, items, removePositionFromCart } = useCart();
 
   const handleDeletePosition = (id: number) => {
     deleteFromCartZustandCatalog(id);
-    removePositionFromCartReduxCart(id);
+    removePositionFromCart(id);
   }
 
   return ( 

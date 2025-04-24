@@ -10,6 +10,7 @@ export const orderMachine = createMachine({
     events: {
       type: 'PLACE_ORDER';
       items: CartItem[];
+      address?: string;
     };
   },
   id: 'order',
@@ -28,7 +29,8 @@ export const orderMachine = createMachine({
               id: Date.now().toString(),
               items: event.items,
               date: new Date().toISOString(),
-              total: event.items.reduce((sum, item) => sum + (item.price * item.quantity), 0)
+              total: event.items.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+              address: event.address
             })
           })
         }
