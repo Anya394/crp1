@@ -6,11 +6,13 @@ export default function TodoItem({ todo, onToggle, onDelete }) {
           checked={todo.completed}
           onChange={() => onToggle(todo.id)}
           data-testid={`toggle-${todo.id}`}
+          className="checkbox"
         />
-        <span data-testid={`todo-text-${todo.id}`}>{todo.text}</span>
+        <span data-testid={`todo-text-${todo.id}`} className="todo-text">{todo.text}</span>
         <button 
           onClick={() => onDelete(todo.id)}
           data-testid={`delete-${todo.id}`}
+          className="delete"
         >
           Delete
         </button>
