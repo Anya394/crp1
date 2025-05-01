@@ -1,13 +1,23 @@
-import { rest } from 'msw';
+import { http, HttpResponse } from 'msw'
 
 export const handlers = [
-  rest.get('https://api.example.com/todos', (req, res, ctx) => {
-    return res(
-      ctx.delay(100),
-      ctx.json([
-        { id: 1, text: 'Mocked todo', completed: false }
-      ])
-    );
+  http.get('https://api.example.com/todos', () => {
+    return HttpResponse.json([
+        { id: 1, text: 'Mocked todo', completed: false },
+        { id: 2, text: 'Написать тесты', completed: true }
+      ], { 
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
   }),
-  // Добавьте другие моки API по аналогии
+
+  http.post('https://api.example.com/todos', async ({ request }) => {
+    const { text } = await request.json()
+    return HttpResponse.json(
+      { id: Date.now(), text, completed: false },
+      { status: 201 }
+    )
+  })
 ];
