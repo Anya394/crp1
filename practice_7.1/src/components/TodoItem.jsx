@@ -1,6 +1,6 @@
 export default function TodoItem({ todo, onToggle, onDelete }) {
     return (
-      <div className={`todo-item ${todo.completed ? 'completed' : ''}`}>
+      <div className={`todo-item ${todo.completed ? 'completed' : ''}`} data-testid={`todo-item-${todo.id}`}>
         <input
           type="checkbox"
           checked={todo.completed}
