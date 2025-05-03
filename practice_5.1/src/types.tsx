@@ -76,3 +76,7 @@ export const formSchema = z.object({
 });
   
 export type FormData = z.infer<typeof formSchema>;
+
+export interface YandexAuthButtonProps {
+    onClick: () => void;
+}
