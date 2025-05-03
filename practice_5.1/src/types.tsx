@@ -76,3 +76,22 @@ export const formSchema = z.object({
 });
   
 export type FormData = z.infer<typeof formSchema>;
+
+export interface YandexAuthButtonProps {
+    onClick: () => void;
+}
+
+export type Role = 'admin' | 'user' | 'guest';
+
+export type Permission = 
+  | 'read'
+  | 'create'
+  | 'edit'
+  | 'delete'
+  | 'manage_users';
+
+export const rolePermissions: Record<Role, Permission[]> = {
+  admin: ['read', 'create', 'edit', 'delete', 'manage_users'],
+  user: ['read', 'create', 'edit'],
+  guest: ['read']
+};

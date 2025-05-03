@@ -2,19 +2,20 @@
 
 import { useAtom } from 'jotai';
 import { isLoggedInAtom, userAtom } from '@/entities/authStorage';
+import Link from 'next/link';
+import { logoutYandex } from "@/app/actions/logout";
+import { useAuth } from '@/hooks/useAuth';
 
-export const AuthStatus = () => {
+export const AuthHeader = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [user, setUser] = useAtom(userAtom);
-
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-    setUser({ name: 'Космический Путешественник', email: 'user@example.com' });
-  };
+  const { logout } = useAuth();
 
   const handleLogout = () => {
+    logoutYandex();
     setIsLoggedIn(false);
     setUser(null);
+    logout();
   };
 
   return (
@@ -30,12 +31,9 @@ export const AuthStatus = () => {
           </button>
         </>
       ) : (
-        <button 
-          onClick={handleLogin}
-          className="px-3 py-1 bg-gray-100 text-gray-800 rounded hover:bg-gray-300 font-bold"
-        >
-          Войти
-        </button>
+        <Link href="/auth" className="px-3 py-1 bg-gray-100 text-gray-800 rounded hover:bg-gray-300 font-bold">
+            Войти
+        </Link>
       )}
     </div>
   );

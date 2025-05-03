@@ -1,6 +1,6 @@
 import { CartIcon } from '@/entities/CartIcon';
 import Link from 'next/link';
-import { AuthStatus } from './AuthStatus';
+import { AuthHeader } from './AuthHeader';
 import { ThemeToggle } from '@/entities/ThemeToggle';
 
 export const Header = () => {
@@ -19,7 +19,7 @@ export const Header = () => {
           <Link href="/orders" className="hover:text-gray-300">
             Мои заказы
           </Link>
-          <AuthStatus />
+          <AuthHeader />
         </nav>
       </div>
     </header>
