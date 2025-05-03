@@ -4,16 +4,18 @@ import { useAtom } from 'jotai';
 import { isLoggedInAtom, userAtom } from '@/entities/authStorage';
 import { useEffect } from 'react';
 import YandexAuthButton from '@/entities/YandexAuthButton';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function Authorization() {
     const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
     const [user, setUser] = useAtom(userAtom);
+    const { login } = useAuth();
 
     useEffect(() => {
         // Получить юзера из cookie
         fetch('/api/user')
         .then(res => res.json())
-        .then(res => setUser({ name: res?.real_name, email: res?.login }))
+        .then(res => setUser({ name: res?.real_name, email: res?.login, role: 'user'}))
     }, []);
 
     const handleAuth = () => {
@@ -24,12 +26,20 @@ export default function Authorization() {
         });
         window.location.href = `https://oauth.yandex.ru/authorize?${params.toString()}`;
 
-        setIsLoggedIn(true);
+        handleLogin('user');
     };
 
-    const handleLogin = () => {
+    const handleLogin = (role: string) => {
+        login(role as any);
         setIsLoggedIn(true);
-        setUser({ name: 'Космический Путешественник', email: 'user@example.com' });
+        if (role == 'admin')
+            setUser({ name: 'admin', email: 'admin@example.com', role: 'admin' });
+        if (role == 'guest')
+            setUser({ name: 'Космический Путешественник', email: 'user@example.com', role: 'guest' });
+        /*if (role == 'user')
+            fetch('/api/user')
+            .then(res => res.json())
+            .then(res => setUser({ name: res?.real_name, email: res?.login, role: 'user'}));*/
     };
 
     return (
@@ -47,11 +57,19 @@ export default function Authorization() {
                         <YandexAuthButton onClick={handleAuth} />
                         <div className="p-4">
                             <button 
-                                onClick={handleLogin}
+                                onClick={() => handleLogin('guest')}
                                 className="px-3 py-1 bg-gray-100 text-gray-800 rounded hover:bg-gray-300 font-bold"
                             >
                                 Войти как гость
                             </button>
+                        </div>
+                        <div>
+                        <button
+                            onClick={() => handleLogin('admin')}
+                            className="w-full bg-red-500 text-white py-2 px-4 rounded"
+                        >
+                            Войти как Админ
+                        </button>
                         </div>
                     </div>
                 </>

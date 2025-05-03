@@ -4,4 +4,4 @@ import { atomWithStorage } from 'jotai/utils';
 export const isLoggedInAtom = atomWithStorage('isLoggedIn', false);
 
 // Атом для хранения информации о пользователе
-export const userAtom = atomWithStorage<{ name: string; email: string } | null>('user', null);
+export const userAtom = atomWithStorage<{ name: string; email: string; role: string } | null>('user', null);

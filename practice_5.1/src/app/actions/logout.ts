@@ -2,7 +2,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-export async function logout() {
+export async function logoutYandex() {
   (await cookies()).delete('yandex_token');
   (await cookies()).delete('user');
   

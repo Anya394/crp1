@@ -3,16 +3,19 @@
 import { useAtom } from 'jotai';
 import { isLoggedInAtom, userAtom } from '@/entities/authStorage';
 import Link from 'next/link';
-import { logout } from "@/app/actions/logout";
+import { logoutYandex } from "@/app/actions/logout";
+import { useAuth } from '@/hooks/useAuth';
 
 export const AuthHeader = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [user, setUser] = useAtom(userAtom);
+  const { logout } = useAuth();
 
   const handleLogout = () => {
-    logout();
+    logoutYandex();
     setIsLoggedIn(false);
     setUser(null);
+    logout();
   };
 
   return (
