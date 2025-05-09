@@ -1,31 +1,12 @@
-import { useState } from 'react';
-
-const TodoItem = ({ text, completed, onClick }: any) => {
-  // Simulate expensive rendering
-  const heavyComputation = () => {
-    let sum = 0;
-    for (let i = 0; i < 10000; i++) sum += i;
-    return sum;
-  };
-
-  heavyComputation();
-
-  return (
-    <li
-      onClick={onClick}
-      style={{ textDecoration: completed ? 'line-through' : 'none' }}
-    >
-      {text}
-    </li>
-  );
-};
+import { useState, useCallback } from 'react';
+import InputForm from './InputForm';
+import TodoItem from './TodoItem';
 
 function App() {
   const [todos, setTodos] = useState([
     { id: 1, text: 'Learn React', completed: false },
     { id: 2, text: 'Fix performance', completed: false },
   ]);
-  const [input, setInput] = useState('');
 
   const toggleTodo = (id: any) => {
     setTodos(todos.map(todo => 
@@ -33,18 +14,13 @@ function App() {
     ));
   };
 
-  const addTodo = () => {
-    setTodos([...todos, { id: Date.now(), text: input, completed: false }]);
-    setInput('');
-  };
+  const addItem = useCallback((text: any) => {
+    setTodos(prevItems => [...prevItems, { id: Date.now(), text, completed: false  }]);
+  }, []);
 
   return (
     <div>
-      <input 
-        value={input} 
-        onChange={(e) => setInput(e.target.value)} 
-      />
-      <button onClick={addTodo}>Add</button>
+      <InputForm onAdd={addItem} />
       <ul>
         {todos.map(todo => (
           <TodoItem
