@@ -13,6 +13,8 @@ const simulateNetworkDelay = () =>
 
 export const getTodos = async () => {
   await simulateNetworkDelay();
+  var response = await fetch(API_URL);
+  todos = await response.json()
   return [...todos];
 };
 

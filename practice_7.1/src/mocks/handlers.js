@@ -1,11 +1,10 @@
 import { http, HttpResponse } from 'msw'
+import { TODOS } from './constants'
 
+let todos = [...TODOS];
 export const handlers = [
   http.get('https://api.example.com/todos', () => {
-    return HttpResponse.json([
-        { id: 1, text: 'Mocked todo', completed: false },
-        { id: 2, text: 'Написать тесты', completed: true }
-      ], { 
+    return HttpResponse.json(todos, { 
         status: 200,
         headers: {
           'Content-Type': 'application/json'
